@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 tweepy = "*"
+boto3 = "*"
+awscli = "*"
 
 [requires]
 python_version = "3.6"

@@ -40,3 +40,6 @@ pipenv shell
 
 ## Testing
 ```Comming Soon```
+
+![Lamda Design](https://github.com/sujonict07/twitterTweet/blob/master/twitter_tweet.png) 
+

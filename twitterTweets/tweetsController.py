@@ -4,6 +4,8 @@ from twitter_credenticals import (
     CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 )
 from send_message_to_sqs import manage_sqs
+from send_data_to_cloudwatch import cloud_watch
+
 
 def tweet_connect():
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -17,24 +19,15 @@ class StdOutListener(StreamListener):
     """
 
     def on_status(self, status):
+        print("I am coming from ---on_status---")
         if status.retweeted:
             return
-        description = status.user.description
         loc = status.user.location
         text = status.text
-        coords = status.coordinates
-        geo = status.geo
-        name = status.user.screen_name
-        user_created = status.user.created_at
-        followers = status.user.followers_count
         id_str = status.id_str
-        created = status.created_at
-        retweets = status.retweet_count
-        bg_color = status.user.profile_background_color
-        # print("--", text, description, loc)
-        print(type(id_str))
-        #manage_sqs(text)
-
+        msg = "ID:{}:body:{}".format(id_str, text)
+        manage_sqs(msg)
+        cloud_watch(loc, text, id_str)
 
         with open('service_status.txt', 'r') as f:
             current_status = f.read()
@@ -47,6 +40,7 @@ class StdOutListener(StreamListener):
 
 
 def start_streaming(keyword):
-    l = StdOutListener()
-    stream = Stream(tweet_connect(), l)
+    print("I am coming from ---start_streaming--- {}".format(keyword))
+    stream_instance = StdOutListener()
+    stream = Stream(tweet_connect(), stream_instance)
     stream.filter(track=[keyword])

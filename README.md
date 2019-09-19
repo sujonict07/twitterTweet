@@ -1,7 +1,7 @@
 # Twiter Tweet Analytics
 
 ## Introduction
-"Build a system that lets you browse and query Twitter tweets.
+Build a system that lets you browse and query Twitter tweets.
 
 The incoming tweets from Twitter real time API must be consumed pushed to SQS. SQS Queue must be consumed and tweets must be put into DynamoDB.
 The interface to the system must be a RESTful API that contains both private and public end-points.
